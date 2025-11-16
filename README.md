@@ -1,72 +1,102 @@
 # project-management-system-Main-Project-
-n appointment management system that lets businesses manage time slots and customers easily schedule, view, or cancel appointments.
-# Getting Started with Create React App
+# Appointment Booking System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack Appointment Booking System built with **Node.js**, **Express**, **MongoDB**, and **React**. This system allows users to register, log in, and book appointments. Admins can manage users and appointments through an admin panel.
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
+# Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- User registration and login
+- Appointment booking and management
+- Admin panel for managing users and appointments
+- Secure authentication using Passport.js
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies Used
 
-### `npm run build`
+- JavaScript
+- HTML
+- CSS
+- Node.js & Express
+- MongoDB
+- React
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Prerequisites
 
-### `npm run eject`
+Before you begin, make sure you have installed:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
+- [MongoDB](https://www.mongodb.com/try/download/community) (local or cloud instance)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Installation
 
-## Learn More
+1. **Clone the repository:**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+git clone https://github.com/PrefinaK/Appointment-Booking-system.git
+cd Appointment-Booking-system
+Install backend dependencies:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+bash
+Copy code
+cd backend
+npm install
+Install frontend dependencies:
 
-### Code Splitting
+bash
+Copy code
+cd ../frontend
+npm install
+Environment Variables
+You need to create .env files for backend and frontend to store secret keys. Do not commit .env files to GitHub.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Example backend .env:
 
-### Analyzing the Bundle Size
+env
+Copy code
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+Example frontend .env:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+env
+Copy code
+REACT_APP_API_URL=http://localhost:5000/api
+Running the Project
+Start the backend:
+bash
+Copy code
+cd backend
+npm start
+Backend will run on http://localhost:5000 (or your .env port).
 
-### Making a Progressive Web App
+Start the frontend:
+bash
+Copy code
+cd frontend
+npm start
+Frontend will run on http://localhost:3000.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Project Structure
+csharp
+Copy code
+appointment-system/
+├─ backend/           # Node.js + Express backend
+│  ├─ models/         # Mongoose models
+│  ├─ routes/         # API routes
+│  ├─ middleware/     # Auth middleware
+│  ├─ server.js       # Entry point
+├─ frontend/          # React frontend
+│  ├─ src/            # React source code
+│  ├─ public/         # Static files
+│  ├─ package.json
+└─ README.md
