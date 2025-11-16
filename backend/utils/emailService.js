@@ -1,74 +1,50 @@
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransporter({
-  host: process.env.EMAIL_HOST,
-  port: process.env.EMAIL_PORT,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+// Check if email is configured
+if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+  console.log('📧 Email service disabled - no credentials configured');
+  module.exports = {
+    sendAppointmentReminder: async () => console.log('Email skipped'),
+    sendAppointmentConfirmation: async () => console.log('Email skipped')
+  };
+} else {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
 
-const sendAppointmentReminder = async (userEmail, userName, appointmentDetails) => {
-  const { service, date, startTime } = appointmentDetails;
-  const appointmentDate = new Date(date).toLocaleDateString();
-
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: userEmail,
-    subject: 'Appointment Reminder',
-    html: `
-      <h2>Appointment Reminder</h2>
-      <p>Dear ${userName},</p>
-      <p>This is a reminder of your upcoming appointment:</p>
-      <ul>
-        <li><strong>Service:</strong> ${service}</li>
-        <li><strong>Date:</strong> ${appointmentDate}</li>
-        <li><strong>Time:</strong> ${startTime}</li>
-      </ul>
-      <p>Please arrive 5 minutes early.</p>
-      <p>Best regards,<br>Your Business Team</p>
-    `
+  const sendAppointmentReminder = async (userEmail, userName, appointmentDetails) => {
+    const { service, date, startTime } = appointmentDetails;
+    try {
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: userEmail,
+        subject: 'Appointment Reminder',
+        html: `<h2>Reminder</h2><p>Dear ${userName}, your ${service} appointment is on ${new Date(date).toLocaleDateString()} at ${startTime}</p>`
+      });
+      console.log('📧 Reminder sent');
+    } catch (error) {
+      console.error('Email error:', error.message);
+    }
   };
 
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log('Reminder email sent successfully');
-  } catch (error) {
-    console.error('Error sending reminder email:', error);
-  }
-};
-
-const sendAppointmentConfirmation = async (userEmail, userName, appointmentDetails) => {
-  const { service, date, startTime } = appointmentDetails;
-  const appointmentDate = new Date(date).toLocaleDateString();
-
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: userEmail,
-    subject: 'Appointment Confirmation',
-    html: `
-      <h2>Appointment Confirmed</h2>
-      <p>Dear ${userName},</p>
-      <p>Your appointment has been confirmed:</p>
-      <ul>
-        <li><strong>Service:</strong> ${service}</li>
-        <li><strong>Date:</strong> ${appointmentDate}</li>
-        <li><strong>Time:</strong> ${startTime}</li>
-      </ul>
-      <p>Thank you for choosing our services!</p>
-    `
+  const sendAppointmentConfirmation = async (userEmail, userName, appointmentDetails) => {
+    const { service, date, startTime } = appointmentDetails;
+    try {
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: userEmail,
+        subject: 'Appointment Confirmed',
+        html: `<h2>Confirmed</h2><p>Dear ${userName}, your ${service} appointment is confirmed for ${new Date(date).toLocaleDateString()} at ${startTime}</p>`
+      });
+      console.log('📧 Confirmation sent');
+    } catch (error) {
+      console.error('Email error:', error.message);
+    }
   };
 
-  try {
-    await transporter.sendMail(mailOptions);
-  } catch (error) {
-    console.error('Error sending confirmation email:', error);
-  }
-};
-
-module.exports = {
-  sendAppointmentReminder,
-  sendAppointmentConfirmation
-};
+  module.exports = { sendAppointmentReminder, sendAppointmentConfirmation };
+}
